@@ -1,4 +1,5 @@
 <?php
+header("Access-Control-Allow-Origin: *");
 session_cache_limiter('nocache');
 $cache_limiter = session_cache_limiter();
 function goProxy($dataURL)
