@@ -393,7 +393,7 @@ L.mapbox.accessToken = 'pk.eyJ1IjoiZWJlbmRlbm5pcyIsImEiOiJ1M2tMMC0wIn0.HL9nr43Jr
   });
 
   var submitToProxy = function(q){
-    $.post("callProxy.php", { //Put path to your PHP file here
+    $.post("http://www.chartophile.com/test/data-collection-package/callProxy.php", { //Put path to your PHP file here
       qurl:q,
       cache: false,
       timeStamp: new Date().getTime()
