@@ -131,105 +131,11 @@
   </form>
   <form id="postGIS" method="post" class="form-horizontal">
     <fieldset>
-        <!-- Select Basic -->
-        <div class="form-group">
-          <label class="col-md-6 control-label" for="generation">Generation</label>
-          <div class="col-md-6">
-            <select id="generation" name="generation" class="form-control">
-              <option value="Existing">Existing</option>
-              <option value="Proposed">Proposed</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Select Basic -->
-        <div class="form-group">
-          <label class="col-md-6 control-label" for="type">Feature Type</label>
-          <div class="col-md-6">
-            <select id="type" name="type" class="form-control">
-              <option value="Pond">Pond</option>
-              <option value="Channel">Channel</option>
-              <option value="Pipe">Pipe</option>
-              <option value="Outlet">Outlet</option>
-              <option value="Inlet">Inlet</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Select Basic -->
-        <div class="form-group">
-          <label class="col-md-6 control-label" for="purpose">Purpose</label>
-          <div class="col-md-6">
-            <select id="purpose" name="purpose" class="form-control">
-              <option value="Detention">Detention</option>
-              <option value="Retention">Retention</option>
-              <option value="Water Quality">Water Quality</option>
-              <option value="Conveyance">Conveyance</option>
-              <option value="Capture">Capture</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Select Basic -->
-        <div class="form-group">
-          <label class="col-md-6 control-label" for="sediment">Sediment</label>
-          <div class="col-md-6">
-            <select id="sediment" name="sediment" class="form-control">
-              <option value="High">High</option>
-              <option value="Moderate">Moderate</option>
-              <option value="Low">Low</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Select Basic -->
-        <div class="form-group">
-          <label class="col-md-6 control-label" for="debris">Debris</label>
-          <div class="col-md-6">
-            <select id="debris" name="debris" class="form-control">
-              <option value="High">High</option>
-              <option value="Moderate">Moderate</option>
-              <option value="Low">Low</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Select Basic -->
-        <div class="form-group">
-          <label class="col-md-6 control-label" for="condition">Condition</label>
-          <div class="col-md-6">
-            <select id="condition" name="condition" class="form-control">
-              <option value="5">5-Excellent</option>
-              <option value="4">4-Functional</option>
-              <option value="3">3-Maintenance Req'd</option>
-              <option value="2">2-Marginal</option>
-              <option value="1">1-Disfunctional</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Select Basic -->
-        <div class="form-group">
-          <label class="col-md-6 control-label" for="recommendation">Recommendation</label>
-          <div class="col-md-6">
-            <select id="recommendation" name="recommendation" class="form-control">
-              <option value="Do Nothing">Do Nothing</option>
-              <option value="Maintenance">Maintenance</option>
-              <option value="Repairs">Repairs</option>
-              <option value="Replace">Replace</option>
-              <option value="Abandon">Abandon</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-        </div>
-
         <!-- Textarea -->
         <div class="form-group">
-          <label class="col-md-3 control-label" for="notes">Notes</label>
+          <label class="col-md-3 control-label" for="description">Description</label>
           <div class="col-md-9">
-            <textarea class="form-control" id="notes" name="notes" placeholder="Describe 'other'"></textarea>
+            <textarea class="form-control" id="description" name="description" placeholder="No special characters"></textarea>
           </div>
         </div>
       <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
@@ -338,7 +244,7 @@ L.mapbox.accessToken = 'pk.eyJ1IjoiZWJlbmRlbm5pcyIsImEiOiJ1M2tMMC0wIn0.HL9nr43Jr
       cartoDBPoints = L.geoJson(data,{
         pointToLayer: function(feature,latlng){
           var marker = L.marker(latlng);
-          var content = '<span style="font-size:15px;font-weight:600;color:#556270;">' + feature.properties.generation + ' ' + feature.properties.type + '</span><br />Purpose: <b>' + feature.properties.purpose + '</b><br />Sediment: <b>' + feature.properties.sediment + '</b><br />Debris: <b>'+ feature.properties.debris + '</b><br />Condition: <b>' + feature.properties.condition + '</b><br />Recommendation: <b>' + feature.properties.recommendation + '</b><br />Notes: ' + feature.properties.notes + '<br />' + '<img src="http://chartophile.com/test/data-collection-package/img/' + feature.properties.photo + '.' + feature.properties.extension + '">';
+          var content = '<span style="font-size:15px;font-weight:600;color:#556270;">' + feature.properties.description + '<br />' + '<img src="http://chartophile.com/test/data-collection-package/img/' + feature.properties.photo + '.' + feature.properties.extension + '">';
           marker.bindPopup(content, {closeButton:true, minWidth:273});
           return marker;
         }
@@ -440,14 +346,7 @@ L.mapbox.accessToken = 'pk.eyJ1IjoiZWJlbmRlbm5pcyIsImEiOiJ1M2tMMC0wIn0.HL9nr43Jr
       });
 
   function setData() {
-    var enteredGeneration = generation.value;
-    var enteredType = type.value;
-    var enteredPurpose = purpose.value;
-    var enteredSediment = sediment.value;
-    var enteredDebris = debris.value;
-    var enteredCondition = condition.value;
-    var enteredRecommendation = recommendation.value;
-    var enteredNotes = notes.value;
+    var enteredDescription = description.value;
     var random = L.DomUtil.get('random').value;
     var extension = L.DomUtil.get('photo').value.split('.').pop();
     var photo = L.DomUtil.get('photo').value.replace("C:\\fakepath\\","");
@@ -459,10 +358,10 @@ L.mapbox.accessToken = 'pk.eyJ1IjoiZWJlbmRlbm5pcyIsImEiOiJ1M2tMMC0wIn0.HL9nr43Jr
                  randomInput = random
                  extensionInput = extension};
     drawnItems.eachLayer(function (layer) {
-      var sql = "INSERT INTO data_collector (the_geom, generation, type, purpose, sediment, debris, condition, recommendation, notes, photo, extension, latitude, longitude) VALUES (ST_SetSRID(ST_GeomFromGeoJSON('";
+      var sql = "INSERT INTO data_collector (the_geom, description, photo, extension, latitude, longitude) VALUES (ST_SetSRID(ST_GeomFromGeoJSON('";
       var a = layer.getLatLng();
       console.log(a);
-      var sql2 ='{"type":"Point","coordinates":[' + a.lng + "," + a.lat + "]}'),4326),'" + enteredGeneration + "','" + enteredType + "','" + enteredPurpose + "','" + enteredSediment + "','" + enteredDebris + "','" + enteredCondition + "','" + enteredRecommendation + "','" + enteredNotes + "','" + randomInput + "','" + extensionInput + "','" + a.lat + "','" + a.lng +"')";
+      var sql2 ='{"type":"Point","coordinates":[' + a.lng + "," + a.lat + "]}'),4326),'" + enteredDescription + "','" + randomInput + "','" + extensionInput + "','" + a.lat + "','" + a.lng +"')";
       var pURL = escape(sql+sql2);
       console.log(pURL);
       submitToProxy(pURL);
