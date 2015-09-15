@@ -238,12 +238,19 @@ L.mapbox.accessToken = 'pk.eyJ1IjoiZWJlbmRlbm5pcyIsImEiOiJ1M2tMMC0wIn0.HL9nr43Jr
   // Create variable for Leaflet.draw features
   var drawnItems = new L.FeatureGroup();
 
+  var redIcon = L.icon({
+      iconUrl: 'css/images/red_marker.svg',
+      iconSize: [25,35],
+      iconAnchor: [10,35],
+      popupAnchor: [0,-35]
+  });
+
   // Get CartoDB selection as GeoJSON and Add to Map
   function getGeoJSON(){
     $.getJSON("https://"+cartoDBUsername+".cartodb.com/api/v2/sql?format=GeoJSON&q="+sqlQuery, function(data) {
       cartoDBPoints = L.geoJson(data,{
         pointToLayer: function(feature,latlng){
-          var marker = L.marker(latlng);
+          var marker = L.marker(latlng,{icon:redIcon});
           var content = '<span style="font-size:15px;font-weight:600;color:#556270;">' + feature.properties.description + '<br />' + '<img src="http://chartophile.com/test/data-collection-package/img/' + feature.properties.photo + '.' + feature.properties.extension + '">';
           marker.bindPopup(content, {closeButton:true, minWidth:273});
           return marker;
